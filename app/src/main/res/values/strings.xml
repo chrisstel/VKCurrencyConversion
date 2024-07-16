@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">VKCurrencyConversion</string>
+    <string name="header_from">From</string>
+    <string name="header_to">To</string>
+    <string name="convert_button_text">Convert</string>
+    <string name="amount_hint">Amount</string>
+    <string-array name="currency">
+        <item>USD</item>
+        <item>EUR</item>
+        <item>GBP</item>
+    </string-array>
 </resources>
