@@ -2,7 +2,7 @@ package com.example.vkcurrencyconversion.data.network
 
 import com.example.vkcurrencyconversion.BuildConfig
 import com.example.vkcurrencyconversion.data.network.api.ExchangeCurrencyApi
-import com.example.vkcurrencyconversion.data.network.response.ExchangeRate
+import com.example.vkcurrencyconversion.data.network.response.ExchangeRateResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -18,7 +18,7 @@ object RetrofitInstance {
             .create(ExchangeCurrencyApi::class.java)
     }
 
-    suspend fun getExchangeRate(from: String, to: String): ExchangeRate =
+    suspend fun getExchangeRate(from: String, to: String): ExchangeRateResponse =
         api.getExchangeRate(
             apiKey = API_KEY,
             baseCurrency = from,

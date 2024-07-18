@@ -53,6 +53,7 @@
         app:layout_constraintTop_toTopOf="@id/guideline4" />
 
     <Button
+        android:id="@+id/convert_button"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:text="@string/convert_button_text"
