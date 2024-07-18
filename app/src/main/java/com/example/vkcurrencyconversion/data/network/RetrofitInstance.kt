@@ -24,5 +24,4 @@ object RetrofitInstance {
             baseCurrency = from,
             currency = to
         )
-
 }
