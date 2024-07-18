@@ -1,25 +1,25 @@
-package com.example.vkcurrencyconversion.presentation
+package com.example.vkcurrencyconversion.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.vkcurrencyconversion.databinding.FragmentConversionBinding
+import com.example.vkcurrencyconversion.databinding.FragmentMainBinding
 
-class ConversionFragment : Fragment() {
-    private var _binding: FragmentConversionBinding? = null
+class MainFragment : Fragment() {
+    private var _binding: FragmentMainBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = FragmentConversionBinding.inflate(layoutInflater, container, false)
+    ): View? = FragmentMainBinding.inflate(layoutInflater, container, false)
         .also { _binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun <T> views(block: FragmentConversionBinding.() -> T): T? = _binding?.block()
+    private fun <T> views(block: FragmentMainBinding.() -> T): T? = _binding?.block()
 }

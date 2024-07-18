@@ -1,4 +1,4 @@
-package domain.model
+package com.example.vkcurrencyconversion.domain.model
 
 data class Currency(
     val amount: Double,
