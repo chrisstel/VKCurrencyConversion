@@ -24,9 +24,13 @@ class ConversionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
 
+        showConvertedCurrency()
+    }
+
+    private fun showConvertedCurrency() {
         views {
-            viewModel.currency.observe(viewLifecycleOwner) { currentCurrency ->
-                textTV.text = currentCurrency.toString()
+            viewModel.exchangedCurrency.observe(viewLifecycleOwner) { exchangedCurrency ->
+                textTV.text = exchangedCurrency.toString()
             }
         }
     }

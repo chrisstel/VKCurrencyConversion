@@ -19,7 +19,7 @@ class CurrencyRepositoryImpl : CurrencyRepository {
             val response: Response<ExchangeRate> = getCurrentRate(from, to).awaitResponse()
 
             if (response.isSuccessful && response.body() != null) {
-                val currentRate = response.body()!!.data[to]!!.round(2)
+                val currentRate = response.body()!!.data[to]!!
 
                ExchangeRateResponse.Success(
                    getConvertCurrency(
@@ -43,7 +43,7 @@ class CurrencyRepositoryImpl : CurrencyRepository {
     private fun getCurrentRate(from: String, to: String): Call<ExchangeRate> = RetrofitInstance.getExchangeRate(from, to)
 
     private fun getConvertCurrency(amount: Double, currencyRate: Double, currencyType: String) = Currency(
-        amount = amount * currencyRate,
+        amount = (amount * currencyRate).round(2),
         currencyType =  currencyType
     )
 
