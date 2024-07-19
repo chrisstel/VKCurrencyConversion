@@ -16,7 +16,6 @@
         app:layout_constraintStart_toStartOf="@id/guideline3" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/amount"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -28,13 +27,14 @@
         app:layout_constraintWidth_max="320dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/amount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:autoSizeMaxTextSize="18sp"
             android:autoSizeMinTextSize="10sp"
             android:autoSizeTextType="uniform"
             android:hint="@string/amount_hint"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:maxLength="10"
             android:textSize="18sp"
             tools:text="100" />

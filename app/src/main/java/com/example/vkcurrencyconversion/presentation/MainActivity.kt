@@ -9,9 +9,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.vkcurrencyconversion.R
 import com.example.vkcurrencyconversion.databinding.ActivityMainBinding
+import com.example.vkcurrencyconversion.presentation.viewmodel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityMainBinding
+    val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

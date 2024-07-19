@@ -9,4 +9,5 @@
         <item>EUR</item>
         <item>GBP</item>
     </string-array>
+    <string name="empty_field_error">Field is empty</string>
 </resources>

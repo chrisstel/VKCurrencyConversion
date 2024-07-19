@@ -1,6 +1,6 @@
 package com.example.vkcurrencyconversion.domain.reporitory
 
-import com.example.vkcurrencyconversion.data.network.response.ExchangeRateResponse
+import com.example.vkcurrencyconversion.utils.response.ExchangeRateResponse
 
 interface CurrencyRepository {
 

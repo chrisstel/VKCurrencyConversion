@@ -1,9 +1,10 @@
 package com.example.vkcurrencyconversion.data.network
 
 import com.example.vkcurrencyconversion.data.network.model.ExchangeRate
-import com.example.vkcurrencyconversion.data.network.response.ExchangeRateResponse
+import com.example.vkcurrencyconversion.utils.response.ExchangeRateResponse
 import com.example.vkcurrencyconversion.domain.model.Currency
 import com.example.vkcurrencyconversion.domain.reporitory.CurrencyRepository
+import com.example.vkcurrencyconversion.utils.round
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import retrofit2.Call
@@ -18,7 +19,7 @@ class CurrencyRepositoryImpl : CurrencyRepository {
             val response: Response<ExchangeRate> = getCurrentRate(from, to).awaitResponse()
 
             if (response.isSuccessful && response.body() != null) {
-                val currentRate = response.body()!!.data[to]!!
+                val currentRate = response.body()!!.data[to]!!.round(2)
 
                ExchangeRateResponse.Success(
                    getConvertCurrency(
