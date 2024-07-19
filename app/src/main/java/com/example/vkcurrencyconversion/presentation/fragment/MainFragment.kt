@@ -23,15 +23,15 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        views {
-//            convertButton.setOnClickListener {
-//                viewModel.convert(
-//                    amount = 100.00,
-//                    from = "USD",
-//                    to = "RUB"
-//                )
-//            }
-//        }
+        views {
+            convertButton.setOnClickListener {
+                viewModel.convert(
+                    amount = 100.00,
+                    from = "USD",
+                    to = "RUB"
+                )
+            }
+        }
     }
 
     private fun <T> views(block: FragmentMainBinding.() -> T): T? = _binding?.block()

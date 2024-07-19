@@ -1,5 +1,9 @@
 package com.example.vkcurrencyconversion.data.network.response
 
-data class ExchangeRateResponse(
-    val `data`: Map<String, Double>
-)
+sealed class ExchangeRateResponse() {
+    data class Success(val exchangeRate: ExchangeRate) : ExchangeRateResponse()
+
+    data class Error(val errors: String?) : ExchangeRateResponse()
+
+    data class Exception(val e: Throwable) : ExchangeRateResponse()
+}

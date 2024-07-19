@@ -8,8 +8,8 @@ class ConvertCurrencyUseCase(
     private val currencyRepository: CurrencyRepository
 ) {
 
-    suspend operator fun invoke(from: Currency, to: String): Currency = currencyRepository
-        .convert(
+    suspend operator fun invoke(from: Currency, to: String) = currencyRepository
+            .convert(
             from = from,
             to = to
         )
