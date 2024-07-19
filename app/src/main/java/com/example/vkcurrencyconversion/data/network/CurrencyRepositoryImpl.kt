@@ -1,8 +1,6 @@
 package com.example.vkcurrencyconversion.data.network
 
-import android.util.Log
-import com.example.vkcurrencyconversion.data.network.response.ErrorResponse
-import com.example.vkcurrencyconversion.data.network.response.ExchangeRate
+import com.example.vkcurrencyconversion.data.network.model.ExchangeRate
 import com.example.vkcurrencyconversion.data.network.response.ExchangeRateResponse
 import com.example.vkcurrencyconversion.domain.model.Currency
 import com.example.vkcurrencyconversion.domain.reporitory.CurrencyRepository
@@ -13,55 +11,46 @@ import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.awaitResponse
 
-const val TAG = "RETROFIT"
+class CurrencyRepositoryImpl : CurrencyRepository {
 
-class CurrencyRepositoryImpl() : CurrencyRepository {
-
-    override suspend fun convert(from: Currency, to: String): ExchangeRateResponse {
+    override suspend fun convert(amount: Double, from: String, to: String): ExchangeRateResponse {
         return try {
-            Log.d(TAG, "Send request")
-            val response: Response<ExchangeRate> = getCurrentRate(from.currencyType, to).awaitResponse()
+            val response: Response<ExchangeRate> = getCurrentRate(from, to).awaitResponse()
 
             if (response.isSuccessful && response.body() != null) {
-                Log.d(TAG, "SUCCESS!!!! ${response.body()!!.data[to]}")
-                ExchangeRateResponse.Success(
-                    exchangeRate = response.body()!!
-                )
+                val currentRate = response.body()!!.data[to]!!
+
+               ExchangeRateResponse.Success(
+                   getConvertCurrency(
+                       amount = amount,
+                       currencyRate = currentRate,
+                       currencyType = to
+                   )
+               )
+
             } else {
-                val errors = getErrors(response)
-
-                Log.d(TAG, errors.joinToString())
-
-                ExchangeRateResponse.Error(
-                    errors = "Error"
-                )
+                getErrors(response)
             }
+
         } catch (e: HttpException) {
-            Log.d(TAG, "Error: HTTPException")
-            ExchangeRateResponse.Error(
-                errors = "Exceptions"
-            )
+            ExchangeRateResponse.Error(message = e.message())
         } catch (e: Throwable) {
-            Log.d(TAG, "Throwable exception ${e.message}")
             ExchangeRateResponse.Exception(e)
         }
     }
 
-    private suspend fun getCurrentRate(from: String, to: String): Call<ExchangeRate> = RetrofitInstance.getExchangeRate(from, to)
+    private fun getCurrentRate(from: String, to: String): Call<ExchangeRate> = RetrofitInstance.getExchangeRate(from, to)
 
-    private fun getErrors(response: Response<ExchangeRate>): List<String> {
-        val errorResponse = errorResponse(response)
-        val errorList = mutableListOf<String>()
+    private fun getConvertCurrency(amount: Double, currencyRate: Double, currencyType: String) = Currency(
+        amount = amount * currencyRate,
+        currencyType =  currencyType
+    )
 
-        errorResponse?.errors?.base_currency?.let { baseCurrencyErrors -> errorList += baseCurrencyErrors }
-        errorResponse?.errors?.currencies?.let { currenciesErrors -> errorList += currenciesErrors }
+    private fun getErrors(response: Response<ExchangeRate>): ExchangeRateResponse.Error = errorResponse(response)
 
-        return errorList
-    }
-
-    private fun errorResponse(response: Response<ExchangeRate>): ErrorResponse? {
+    private fun errorResponse(response: Response<ExchangeRate>): ExchangeRateResponse.Error {
         val gson = Gson()
-        val type = object : TypeToken<ErrorResponse>() {}.type
+        val type = object : TypeToken<ExchangeRateResponse.Error>() {}.type
 
         return gson.fromJson(response.errorBody()!!.charStream(), type)
     }

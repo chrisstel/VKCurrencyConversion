@@ -19,13 +19,9 @@ class MainViewModel(
 
     fun convert(amount: Double, from: String, to: String) = viewModelScope.launch {
         convertCurrencyUseCase(
-            from = currentCurrency(amount, from),
+            amount = amount,
+            from = from,
             to = to
         )
     }
-
-    private fun currentCurrency(amount: Double, type: String) = Currency(
-        amount = amount,
-        currencyType = type
-    )
 }

@@ -1,6 +1,6 @@
 package com.example.vkcurrencyconversion.data.network.api
 
-import com.example.vkcurrencyconversion.data.network.response.ExchangeRate
+import com.example.vkcurrencyconversion.data.network.model.ExchangeRate
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
