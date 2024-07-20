@@ -14,4 +14,7 @@
     <string name="arrow_description">Down arrow</string>
     <string name="main_menu_item">Home</string>
     <string name="conversion_menu_item">Conversion</string>
+    <string name="no_internet_connection_error">No Internet connection\n</string>
+    <string name="internet_error">Network failure</string>
+    <string name="conversion_error">Conversion error</string>
 </resources>

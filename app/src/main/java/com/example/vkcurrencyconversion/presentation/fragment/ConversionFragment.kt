@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.vkcurrencyconversion.databinding.FragmentConversionBinding
+import com.example.vkcurrencyconversion.domain.model.Currency
 import com.example.vkcurrencyconversion.presentation.MainActivity
 import com.example.vkcurrencyconversion.presentation.viewmodel.MainViewModel
+import com.example.vkcurrencyconversion.util.Resource
 
 class ConversionFragment : Fragment() {
     private var _binding: FragmentConversionBinding? = null
@@ -24,8 +26,14 @@ class ConversionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
 
-        showCurrentCurrency()
-        showConvertedCurrency()
+        viewModel.exchangeResponse.observe(viewLifecycleOwner) { response ->
+            when {
+                response is Resource.Success -> {
+                    showCurrentCurrency()
+                    showConvertedCurrency(response.result)
+                }
+            }
+        }
     }
 
     private fun showCurrentCurrency() {
@@ -38,13 +46,10 @@ class ConversionFragment : Fragment() {
         }
     }
 
-    private fun showConvertedCurrency() {
+    private fun showConvertedCurrency(responseResult: Currency) {
         views {
-            viewModel.exchangedCurrency.observe(viewLifecycleOwner) {
-                val convertedCurrency = " ${it.amount} ${it.currencyType}"
-
-                this.convertedCurrency.text = convertedCurrency
-            }
+            val convertedCurrency = "${responseResult.amount} ${responseResult.currencyType}"
+            this.convertedCurrency.text = convertedCurrency
         }
     }
 

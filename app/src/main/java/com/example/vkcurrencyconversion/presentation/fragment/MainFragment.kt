@@ -10,6 +10,7 @@ import com.example.vkcurrencyconversion.R
 import com.example.vkcurrencyconversion.databinding.FragmentMainBinding
 import com.example.vkcurrencyconversion.presentation.MainActivity
 import com.example.vkcurrencyconversion.presentation.viewmodel.MainViewModel
+import com.example.vkcurrencyconversion.util.Resource
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
@@ -29,6 +30,14 @@ class MainFragment : Fragment() {
         views {
             convertButton.setOnClickListener {
                 convertCurrency()
+            }
+        }
+
+        viewModel.exchangeResponse.observe(viewLifecycleOwner) { response ->
+            when {
+                response is Resource.Loading -> showProgressBar()
+                response is Resource.Success -> hideProgressBar()
+                response is Resource.Error -> showError(response.message!!)
             }
         }
     }
@@ -60,5 +69,22 @@ class MainFragment : Fragment() {
             currencyMenuTo.setSelection(0)
         }
     }
+
+    private fun showProgressBar() {
+        views {
+            progressBar.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideProgressBar() {
+        views {
+            progressBar.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun showError(error: String) {
+        Toast.makeText(context, error, Toast.LENGTH_LONG).show()
+    }
+
     private fun <T> views(block: FragmentMainBinding.() -> T): T? = _binding?.block()
 }

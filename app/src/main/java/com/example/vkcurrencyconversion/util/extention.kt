@@ -1,4 +1,4 @@
-package com.example.vkcurrencyconversion.utils
+package com.example.vkcurrencyconversion.util
 
 import kotlin.math.round
 
