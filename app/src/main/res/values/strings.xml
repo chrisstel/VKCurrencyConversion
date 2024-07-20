@@ -7,8 +7,11 @@
     <string-array name="currency">
         <item>USD</item>
         <item>EUR</item>
-        <item>GBP</item>
+        <item>RUB</item>
+        <item>CNY</item>
     </string-array>
     <string name="empty_field_error">Field is empty</string>
     <string name="arrow_description">Down arrow</string>
+    <string name="main_menu_item">Home</string>
+    <string name="conversion_menu_item">Conversion</string>
 </resources>

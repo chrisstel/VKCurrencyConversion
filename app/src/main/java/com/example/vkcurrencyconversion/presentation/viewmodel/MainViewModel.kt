@@ -1,17 +1,19 @@
 package com.example.vkcurrencyconversion.presentation.viewmodel
 
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.vkcurrencyconversion.App
 import com.example.vkcurrencyconversion.domain.model.Currency
 import com.example.vkcurrencyconversion.domain.usecase.ConvertCurrencyUseCase
 import com.example.vkcurrencyconversion.utils.response.ExchangeRateResponse
 import kotlinx.coroutines.launch
 
 class MainViewModel(
+    app: App,
     private val convertCurrencyUseCase: ConvertCurrencyUseCase
-) : ViewModel() {
+) : AndroidViewModel(app) {
     private val _currency = MutableLiveData<Currency>()
     val currency: LiveData<Currency> = _currency
 

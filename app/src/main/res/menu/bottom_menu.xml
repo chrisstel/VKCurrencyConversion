@@ -3,10 +3,11 @@
 
     <item
         android:id="@+id/navigation_main"
-        android:title="Main" />
+        android:icon="@drawable/selector_im_home"
+        android:title="@string/main_menu_item" />
 
     <item
         android:id="@+id/navigation_conversion"
-        android:title="Conversion" />
-
+        android:icon="@drawable/selector_im_money"
+        android:title="@string/conversion_menu_item" />
 </menu>
