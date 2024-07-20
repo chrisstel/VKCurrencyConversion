@@ -10,4 +10,5 @@
         <item>GBP</item>
     </string-array>
     <string name="empty_field_error">Field is empty</string>
+    <string name="arrow_description">Down arrow</string>
 </resources>

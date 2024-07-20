@@ -21,12 +21,14 @@ class MainViewModel(
     fun convert(amount: Double, from: String, to: String) = viewModelScope.launch {
         saveCurrency(amount, from)
 
+
         val result = convertCurrencyUseCase(amount = amount, from = from, to = to)
 
         when {
-            result is ExchangeRateResponse.Success -> _exchangedCurrency.value = result.currency
+                result is ExchangeRateResponse.Success -> _exchangedCurrency.value = result.currency
         }
     }
+
 
     private fun saveCurrency(amount: Double, currencyType: String) {
         _currency.value = Currency(
