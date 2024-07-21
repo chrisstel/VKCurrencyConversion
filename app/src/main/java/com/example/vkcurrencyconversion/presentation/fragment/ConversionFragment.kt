@@ -10,6 +10,7 @@ import com.example.vkcurrencyconversion.domain.model.Currency
 import com.example.vkcurrencyconversion.presentation.MainActivity
 import com.example.vkcurrencyconversion.presentation.viewmodel.MainViewModel
 import com.example.vkcurrencyconversion.util.Resource
+import com.example.vkcurrencyconversion.util.currencies
 
 class ConversionFragment : Fragment() {
     private var _binding: FragmentConversionBinding? = null
@@ -43,7 +44,8 @@ class ConversionFragment : Fragment() {
     private fun showCurrentCurrency() {
         views {
             viewModel.currency.observe(viewLifecycleOwner) {
-                val currentCurrency = "${it.amount} ${it.currencyType}"
+                val currencySymbol = currencySymbol(it.currencyType)
+                val currentCurrency = "${it.amount} $currencySymbol"
 
                 this.currentCurrency.text = currentCurrency
             }
@@ -52,11 +54,14 @@ class ConversionFragment : Fragment() {
 
     private fun showConvertedCurrency(responseResult: Currency) {
         views {
-            val convertedCurrency = "${responseResult.amount} ${responseResult.currencyType}"
+            val currencySymbol = currencySymbol(responseResult.currencyType)
+            val convertedCurrency = "${responseResult.amount} $currencySymbol"
 
             this.convertedCurrency.text = convertedCurrency
         }
     }
+
+    private fun currencySymbol(currencyType: String) = currencies[currencyType]
 
     private fun <T> views(block: FragmentConversionBinding.() -> T): T? = _binding?.block()
 }

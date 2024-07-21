@@ -5,17 +5,21 @@
     <string name="convert_button_text">Convert</string>
     <string name="amount_hint">Amount</string>
     <string-array name="currency">
-        <item>USD</item>
-        <item>EUR</item>
-        <item>RUB</item>
-        <item>CNY</item>
+        <item>@string/USD</item>
+        <item>@string/EUR</item>
+        <item>@string/RUB</item>
+        <item>@string/CNY</item>
     </string-array>
     <string name="empty_field_error">Field is empty</string>
     <string name="arrow_description">Down arrow</string>
     <string name="main_menu_item">Home</string>
     <string name="conversion_menu_item">Conversion</string>
-    <string name="no_internet_connection_error">No Internet connection\n</string>
+    <string name="no_internet_connection_error">No Internet connection</string>
     <string name="internet_error">Network failure</string>
     <string name="conversion_error">Conversion error</string>
     <string name="same_currencies_error">Currencies must be different</string>
+    <string name="USD">\u0024</string>
+    <string name="EUR">\u20ac</string>
+    <string name="RUB">\u20BD</string>
+    <string name="CNY">\u00A5</string>
 </resources>

@@ -11,6 +11,7 @@ import com.example.vkcurrencyconversion.databinding.FragmentMainBinding
 import com.example.vkcurrencyconversion.presentation.MainActivity
 import com.example.vkcurrencyconversion.presentation.viewmodel.MainViewModel
 import com.example.vkcurrencyconversion.util.Resource
+import com.example.vkcurrencyconversion.util.currencies
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
@@ -52,8 +53,8 @@ class MainFragment : Fragment() {
 
     private fun tryToConvert(
         amount: String,
-        currencyTypeFrom: String,
-        currencyTypeTo: String
+        from: String,
+        to: String
     ) {
         when {
             amount.isEmpty() -> showErrorToast(message = R.string.empty_field_error)
@@ -63,8 +64,8 @@ class MainFragment : Fragment() {
             else -> {
                 viewModel.convert(
                     amount = amount.toDouble(),
-                    from = currencyTypeFrom,
-                    to = currencyTypeTo
+                    from = currencyType(from),
+                    to = currencyType(to)
                 )
 
                 clearViews()
@@ -80,6 +81,8 @@ class MainFragment : Fragment() {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
+    private fun currencyType(type: String) = currencies.entries.find { it.value == type }!!.key
+
     private fun clearViews() {
         views {
             amount.text?.clear()
@@ -93,7 +96,10 @@ class MainFragment : Fragment() {
             when {
                 response is Resource.Loading -> showProgressBar()
                 response is Resource.Success -> hideProgressBar()
-                response is Resource.Error -> showToastError(response.message!!)
+                response is Resource.Error -> {
+                    hideProgressBar()
+                    showToastError(response.message!!)
+                }
             }
         }
     }
