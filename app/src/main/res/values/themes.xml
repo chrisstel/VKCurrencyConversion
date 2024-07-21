@@ -1,9 +1,24 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.VKCurrencyConversion" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.VKCurrencyConversion" parent="Theme.Material3.DayNight.NoActionBar" />
+
+    <style name="Theme.VKCurrencyConversion" parent="Base.Theme.VKCurrencyConversion">
+        <item name="colorPrimary">@color/green_500</item>
+        <item name="android:windowBackground">@color/gray_100</item>
+        <item name="colorOnSecondary">@color/gray_600</item>
+        <item name="colorAccent">@color/yellow_500</item>
+        <item name="bottomNavigationStyle">@style/Widget.VKCurrencyConversion</item>
+        <item name="down_arrow">@drawable/im_down_arrow_light</item>
     </style>
 
-    <style name="Theme.VKCurrencyConversion" parent="Base.Theme.VKCurrencyConversion" />
+    <style name="Widget.VKCurrencyConversion" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">
+            @style/ThemeOverlay.VKCurrencyConversion.BottomNavigationView
+        </item>
+    </style>
+
+    <style name="ThemeOverlay.VKCurrencyConversion.BottomNavigationView" parent="">
+        <item name="colorPrimary">@color/gray_400</item>
+    </style>
 </resources>
+
