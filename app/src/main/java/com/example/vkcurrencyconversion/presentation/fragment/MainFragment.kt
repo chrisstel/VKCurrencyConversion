@@ -27,17 +27,15 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
 
+        setUpConvertButton()
+
+        handleRemoteResponse()
+    }
+
+    private fun setUpConvertButton() {
         views {
             convertButton.setOnClickListener {
                 convertCurrency()
-            }
-        }
-
-        viewModel.exchangeResponse.observe(viewLifecycleOwner) { response ->
-            when {
-                response is Resource.Loading -> showProgressBar()
-                response is Resource.Success -> hideProgressBar()
-                response is Resource.Error -> showError(response.message!!)
             }
         }
     }
@@ -48,7 +46,21 @@ class MainFragment : Fragment() {
             val currencyTypeFrom = currencyMenuFrom.selectedItem.toString()
             val currencyTypeTo = currencyMenuTo.selectedItem.toString()
 
-            if (amount.isNotEmpty()) {
+            tryToConvert(amount, currencyTypeFrom, currencyTypeTo)
+        }
+    }
+
+    private fun tryToConvert(
+        amount: String,
+        currencyTypeFrom: String,
+        currencyTypeTo: String
+    ) {
+        when {
+            amount.isEmpty() -> showErrorToast(message = R.string.empty_field_error)
+
+            currenciesAreSame() == true ->  showErrorToast(message = R.string.same_currencies_error) 
+
+            else -> {
                 viewModel.convert(
                     amount = amount.toDouble(),
                     from = currencyTypeFrom,
@@ -56,10 +68,16 @@ class MainFragment : Fragment() {
                 )
 
                 clearViews()
-            } else {
-                Toast.makeText(context, R.string.empty_field_error, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun currenciesAreSame(): Boolean? = views {
+        currencyMenuFrom.selectedItem == currencyMenuTo.selectedItem
+    }
+
+    private fun showErrorToast(message: Int) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun clearViews() {
@@ -67,6 +85,16 @@ class MainFragment : Fragment() {
             amount.text?.clear()
             currencyMenuFrom.setSelection(0)
             currencyMenuTo.setSelection(0)
+        }
+    }
+
+    private fun handleRemoteResponse() {
+        viewModel.exchangeResponse.observe(viewLifecycleOwner) { response ->
+            when {
+                response is Resource.Loading -> showProgressBar()
+                response is Resource.Success -> hideProgressBar()
+                response is Resource.Error -> showToastError(response.message!!)
+            }
         }
     }
 
@@ -82,7 +110,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun showError(error: String) {
+    private fun showToastError(error: String) {
         Toast.makeText(context, error, Toast.LENGTH_LONG).show()
     }
 

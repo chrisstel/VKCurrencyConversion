@@ -26,6 +26,10 @@ class ConversionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
 
+        handleSuccessResponse()
+    }
+
+    private fun handleSuccessResponse() {
         viewModel.exchangeResponse.observe(viewLifecycleOwner) { response ->
             when {
                 response is Resource.Success -> {
@@ -49,6 +53,7 @@ class ConversionFragment : Fragment() {
     private fun showConvertedCurrency(responseResult: Currency) {
         views {
             val convertedCurrency = "${responseResult.amount} ${responseResult.currencyType}"
+
             this.convertedCurrency.text = convertedCurrency
         }
     }
